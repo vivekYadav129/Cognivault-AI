@@ -1,0 +1,55 @@
+spring:
+  datasource:
+    url: ${DATABASE_URL:jdbc:postgresql://postgres:5432/cognivault}
+    username: ${DATABASE_USERNAME:cognivault}
+    password: ${DATABASE_PASSWORD:cognivault_password}
+    driver-class-name: org.postgresql.Driver
+    hikari:
+      maximum-pool-size: 20
+      minimum-idle: 5
+      connection-timeout: 30000
+      idle-timeout: 600000
+      max-lifetime: 1800000
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: false
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+        jdbc:
+          batch_size: 50
+        order_inserts: true
+        order_updates: true
+  h2:
+    console:
+      enabled: false
+
+jwt:
+  secret: ${JWT_SECRET:prod_jwt_super_secret_key_minimum_256_bits_length_for_hmac_sha}
+  expiration-ms: ${JWT_EXPIRATION_MS:86400000}
+
+cognivault:
+  security:
+    cors:
+      allowed-origins: ${CORS_ALLOWED_ORIGINS:http://localhost:5173,http://127.0.0.1:5173,http://localhost,http://localhost:80}
+  document:
+    upload-dir: ${UPLOAD_DIR:/app/uploads}
+  embedding:
+    provider: ${EMBEDDING_PROVIDER:openai}
+    api-key: ${OPENAI_API_KEY:}
+    model: ${OPENAI_EMBEDDING_MODEL:text-embedding-3-small}
+    dimension: ${EMBEDDING_DIMENSION:1536}
+  rag:
+    model: ${OPENAI_CHAT_MODEL:gpt-4o-mini}
+    top-k: 5
+    similarity-threshold: ${RAG_SIMILARITY_THRESHOLD:0.05}
+    max-context-chars: 12000
+
+logging:
+  level:
+    root: INFO
+    com.example.aiknowledgeassistant: INFO
+    org.springframework.security: WARN
+  pattern:
+    console: "%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n"

@@ -1,0 +1,12 @@
+.env
+.env.*
+!.env.example
+target/
+*.class
+node_modules/
+dist/
+.idea/
+.vscode/
+*.log
+*.db
+uploads/

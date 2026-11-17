@@ -1,0 +1,26 @@
+spring:
+  datasource:
+    url: ${DATABASE_URL:jdbc:h2:mem:aiknowledgeassistantdb;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE;MODE=PostgreSQL}
+    username: ${DATABASE_USERNAME:sa}
+    password: ${DATABASE_PASSWORD:}
+    driver-class-name: ${DATABASE_DRIVER:org.h2.Driver}
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
+        dialect: ${HIBERNATE_DIALECT:org.hibernate.dialect.H2Dialect}
+  h2:
+    console:
+      enabled: true
+      path: /h2-console
+
+jwt:
+  secret: ${JWT_SECRET:9a4f2c8d7e1b5a9c3d7e1f4a8c2b5e9f1a4c7d0e3f6a9c2b5e8f1a4c7d0e3f6a}
+  expiration-ms: ${JWT_EXPIRATION_MS:86400000}
+
+cognivault:
+  rag:
+    similarity-threshold: 0.05

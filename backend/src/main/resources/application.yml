@@ -1,0 +1,31 @@
+spring:
+  application:
+    name: ai-knowledge-assistant
+  profiles:
+    active: ${SPRING_PROFILES_ACTIVE:dev}
+  servlet:
+    multipart:
+      max-file-size: 10MB
+      max-request-size: 10MB
+
+cognivault:
+  document:
+    chunk-size: 1000
+    chunk-overlap: 150
+    upload-dir: ./uploads
+  embedding:
+    provider: ${EMBEDDING_PROVIDER:openai}
+    api-key: ${OPENAI_API_KEY:}
+    model: ${OPENAI_EMBEDDING_MODEL:text-embedding-3-small}
+    dimension: ${EMBEDDING_DIMENSION:1536}
+    batch-size: ${EMBEDDING_BATCH_SIZE:50}
+  vector:
+    top-k: 5
+  rag:
+    model: ${OPENAI_CHAT_MODEL:gpt-4o-mini}
+    top-k: 5
+    similarity-threshold: ${RAG_SIMILARITY_THRESHOLD:0.05}
+    max-context-chars: 12000
+
+server:
+  port: ${PORT:8080}
