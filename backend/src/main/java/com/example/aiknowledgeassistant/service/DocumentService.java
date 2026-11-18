@@ -136,6 +136,25 @@ public class DocumentService {
             throw new BadRequestException("Document processing failed: " + e.getMessage());
         }
     }
+    @Transactional
+public int reembedExistingDocument(Long documentId) {
+    List<DocumentChunk> chunks =
+            documentChunkRepository.findAllByDocumentIdOrderByChunkIndexAsc(documentId);
+
+    if (chunks.isEmpty()) {
+        throw new IllegalStateException("No chunks found for document ID: " + documentId);
+    }
+
+    List<String> chunkTexts = chunks.stream()
+            .map(DocumentChunk::getContent)
+            .collect(Collectors.toList());
+
+    List<float[]> embeddings = embeddingService.embed(chunkTexts);
+
+    vectorStore.saveAll(chunks, embeddings);
+
+    return chunks.size();
+}
 
     public DocumentListResponse getUserDocuments(String userEmail) {
         User user = getUserByEmail(userEmail);
