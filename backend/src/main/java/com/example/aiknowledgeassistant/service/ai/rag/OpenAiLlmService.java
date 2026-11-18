@@ -7,6 +7,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 
 import java.net.URI;
 import java.net.http.HttpClient;
@@ -19,6 +20,11 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 @Service
+@ConditionalOnProperty(
+        name = "cognivault.rag.provider",
+        havingValue = "openai",
+        matchIfMissing = true
+)
 public class OpenAiLlmService implements LlmService {
 
     private static final Logger logger = LoggerFactory.getLogger(OpenAiLlmService.class);
