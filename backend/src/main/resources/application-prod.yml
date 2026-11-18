@@ -46,6 +46,8 @@ cognivault:
     top-k: 5
     similarity-threshold: ${RAG_SIMILARITY_THRESHOLD:0.05}
     max-context-chars: 12000
+  migration:
+    reembed-existing: ${MIGRATE_EXISTING_EMBEDDINGS:false}
 
 logging:
   level:
